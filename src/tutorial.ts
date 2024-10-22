@@ -211,3 +211,106 @@ const bob: Manager = { id: 1, name: "bob", employees: [alice, steve] };
 
 printStaffDetails(alice);
 printStaffDetails(bob);
+
+type Book = { id: number; name: string; price: number };
+type DiscountedBook = Book & { discount: number };
+
+const book1: Book = {
+  id: 1,
+  name: "how to",
+  price: 15,
+};
+const book2: Book = {
+  id: 2,
+  name: "the secret",
+  price: 18,
+};
+
+const discountedBook: DiscountedBook = {
+  id: 3,
+  name: "gnomes",
+  price: 25,
+  discount: 0.15,
+};
+
+const propName = "age";
+type Animal = {
+  [propName]: number;
+};
+
+let tiger: Animal = { [propName]: 5 };
+
+//Interface
+
+interface BookI {
+  readonly isbn: number;
+  title: string;
+  author: string;
+  genre?: string;
+
+  //method
+  printAuthor(): void;
+  printTitle(message: string): string;
+  printSmth: (someValue: number) => number;
+}
+
+const deepWork: BookI = {
+  isbn: 123,
+  title: "deep work",
+  author: "self-help",
+  genre: "self-help",
+  printAuthor() {
+    console.log(this.author);
+  },
+  printTitle(message) {
+    return `${this.title} ${message}`;
+  },
+  //first option
+  // printSmth: function (someValue) {
+  //   return someValue;
+  // },
+  //second option
+  // printSmth: (someValue) => {
+  //   console.log(deepWork.author);
+  //   return someValue;
+  // },
+  printSmth(someValue) {
+    return someValue;
+  },
+};
+
+// deepWork.isbn = 1111;
+deepWork.printAuthor();
+console.log(deepWork.printTitle("is an awesome book"));
+
+// interface Person {
+//   name: string;
+//   getDetails(): string;
+// }
+
+// interface DogOwner {
+//   dogName: string;
+//   getDogDetails(): string;
+// }
+
+// interface Person {
+//   age: number;
+// }
+
+// const person: Person = {
+//   name: "john",
+//   age: 30,
+//   getDetails() {
+//     return `Name: ${this.name}, Age: ${this.age}`;
+//   },
+// };
+
+// interface Employee extends Person {
+//   employeeId: number;
+// }
+
+// const employee = {
+//   name: "jane",
+//   age: 28,
+//   getDetails() {},
+// };
