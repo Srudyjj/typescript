@@ -1,44 +1,42 @@
-import { z } from "zod";
-const url = "https://www.course-api.com/react-tours-project";
+class Book {
+  private checkout: boolean = false;
+  constructor(
+    readonly title: string,
+    public author: string,
+    private someValue: number
+  ) {}
+  public getSomeValue() {
+    return this.someValue;
+  }
 
-const tourSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  info: z.string(),
-  image: z.string(),
-  price: z.string(),
-  smth: z.string()
-});
+  get info() {
+    return `${this.title} by ${this.author}`;
+  }
 
-type Tour = z.infer<typeof tourSchema>;
-
-async function fetchData(url: string): Promise<Tour[]> {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const rawData: Tour[] = await response.json();
-    const result = tourSchema.array().safeParse(rawData);
-    console.log(result);
-    
-    if (!result.success) {
-      throw new Error(`Invalid data: ${result.error}`);
-    }
-
-    return result.data;
-  } catch (error) {
-    const errMsg =
-      error instanceof Error ? error.message : "there was an error...";
-    console.log(errMsg);
-    return [];
+  set checkOut(checkOut: boolean) {
+    this.checkout = checkOut;
   }
 }
 
-const tours = await fetchData(url);
-console.log(tours);
+const deepWork = new Book("Deep Work", "Cal Newport", 123);
 
-tours.map((tour) => {
-  console.log(tour.id);
-});
+console.log(deepWork);
+console.log((deepWork.checkOut = true));
+console.log(deepWork);
+
+console.log(deepWork.info);
+
+interface IPerson {
+  name: string;
+  age: number;
+  greet(): void;
+}
+
+class Person implements IPerson {
+  constructor(public name: string, public age: number) {}
+  greet(): void {
+    console.log(`Hello, my name is ${this.name} and I'm ${this.age} years old`);
+  }
+}
+const hipster = new Person("shakeAndBake", 100);
+hipster.greet();
